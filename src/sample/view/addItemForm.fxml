@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: #d32f2f;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AddItemFormController">
+   <children>
+      <AnchorPane layoutY="100.0" prefHeight="350.0" prefWidth="700.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <TextField fx:id="addItemFormTask" layoutX="225.0" layoutY="64.0" prefHeight="37.0" prefWidth="250.0" promptText="Task" />
+            <TextField fx:id="addItemFormDescription" layoutX="226.0" layoutY="138.0" prefHeight="37.0" prefWidth="250.0" promptText="Description" />
+            <Button fx:id="addItemFormButton" layoutX="295.0" layoutY="217.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="111.0" text="Add Task" />
+            <Button fx:id="goBackButton" layoutX="295.0" layoutY="274.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="111.0" text="Go back" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="295.0" layoutY="39.0" text="ToDoList" textFill="WHITE">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

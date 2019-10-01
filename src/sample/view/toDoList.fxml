@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: #d32f2f;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ToDoListController">
+   <children>
+      <AnchorPane layoutY="100.0" prefHeight="350.0" prefWidth="700.0" style="-fx-background-color: #ff6659;">
+         <children>
+            <ListView fx:id="tasksList" layoutX="14.0" layoutY="15.0" prefHeight="321.0" prefWidth="481.0" />
+            <Button fx:id="addTask" layoutX="545.0" layoutY="15.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="120.0" text="Add Task" />
+            <Button fx:id="logOut" layoutX="545.0" layoutY="284.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="120.0" text="Log out" />
+            <TextField fx:id="textDelete" layoutX="545.0" layoutY="85.0" prefHeight="31.0" prefWidth="120.0" promptText="Delete by taskID" />
+            <Button fx:id="buttonDelete" layoutX="545.0" layoutY="116.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="120.0" text="Delete" />
+            <Button fx:id="refreshButton" layoutX="545.0" layoutY="231.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="120.0" text="Resfresh" />
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" layoutX="295.0" layoutY="37.0" text="ToDoList" textFill="WHITE">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
