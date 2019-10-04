@@ -12,8 +12,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(new URL("file:///Users/joker/IdeaProjects/ToDo/src/sample/view/login.fxml"));
-        primaryStage.setTitle("Hello World");
+        Parent root = FXMLLoader.load(getClass().getResource("/sample/view/login.fxml"));
+        primaryStage.setTitle("ToDoList");
         primaryStage.setScene(new Scene(root, 700, 450));
         primaryStage.show();
     }

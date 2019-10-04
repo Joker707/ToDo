@@ -5,23 +5,27 @@ import sample.model.User;
 
 import java.sql.*;
 
-public class DatabaseHandler extends Configs{
+public class DatabaseHandler extends Configs {
 
-    Connection dbConnetcion;
+//    Configs config = null;
+    Connection dbConnection;
+
 
     public Connection getDbConnection() throws ClassNotFoundException, SQLException {
-        String connectinString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName + "?serverTimezone=UTC";
+        String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort.toString() + "/" + dbName + "?serverTimezone=UTC";
+
+//        String.format(null);
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        dbConnetcion = DriverManager.getConnection(connectinString, dbUser, dbPassword);
+        dbConnection = DriverManager.getConnection(connectionString, dbUser, dbPassword);
 
-        return dbConnetcion;
+        return dbConnection;
     }
 
     public void signUpUser(User user) {
-        String insert = "INSERT INTO " + Const.USERS_TABLE + "(" + Const.USERS_FIRSTNAME + "," + Const.USERS_LASTNAME +
-                "," + Const.USERS_USERNAME + "," + Const.USERS_PASSWORD + ")" + "VALUES(?,?,?,?)";
+        String insert = "INSERT INTO " + Const.USERS.TABLE + "(" + Const.USERS.FIRSTNAME + "," + Const.USERS.LASTNAME +
+                "," + Const.USERS.USERNAME + "," + Const.USERS.PASSWORD + ")" + "VALUES(?,?,?,?)";
 
             try {
                 PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
@@ -47,8 +51,8 @@ public class DatabaseHandler extends Configs{
         ResultSet resultSet = null;
 
         if (!user.getUserName().equals("") && !user.getPassword().equals("")) {
-            String query = "SELECT * FROM " + Const.USERS_TABLE + " WHERE " + Const.USERS_USERNAME +
-                    "=?" + " AND " + Const.USERS_PASSWORD + "=?";
+            String query = "SELECT * FROM " + Const.USERS.TABLE + " WHERE " + Const.USERS.USERNAME +
+                    "=?" + " AND " + Const.USERS.PASSWORD + "=?";
 
             try {
                 PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
@@ -63,18 +67,40 @@ public class DatabaseHandler extends Configs{
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+        return resultSet;
+    }
 
 
-        } else {
-            System.out.println("Sosi");
+    public ResultSet getUsername(User user) {
+
+        ResultSet resultSet = null;
+
+        if (!user.getUserName().equals("") && !user.getPassword().equals("")) {
+            String query = "SELECT * FROM " + Const.USERS.TABLE + " WHERE " + Const.USERS.USERNAME +
+                    "=?";
+
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+
+                preparedStatement.setString(1, user.getUserName());
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
         }
         return resultSet;
     }
 
 
     public void addTask(Task task) {
-        String insert = "INSERT INTO " + Const.TASKS_TABLE + "(" + Const.TASKS_USERID + "," + Const.TASKS_DATE +
-                "," + Const.TASKS_DESCRIPTION + "," + Const.TASKS_TASK + ")" + "Values(?,?,?,?)";
+        String insert = "INSERT INTO " + Const.TASKS.TABLE + "(" + Const.TASKS.USERID + "," + Const.TASKS.DATE +
+                "," + Const.TASKS.DESCRIPTION + "," + Const.TASKS.TASK + ")" + "Values(?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
@@ -97,7 +123,7 @@ public class DatabaseHandler extends Configs{
 
         ResultSet resultTasks = null;
 
-        String query = "SELECT * FROM " + Const.TASKS_TABLE + " WHERE " + Const.TASKS_USERID + "=?";
+        String query = "SELECT * FROM " + Const.TASKS.TABLE + " WHERE " + Const.TASKS.USERID + "=?";
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
             preparedStatement.setInt(1, userId);
@@ -114,7 +140,7 @@ public class DatabaseHandler extends Configs{
     }
 
     public void deleteTask(int userId, int taskId) {
-        String query = "DELETE FROM " + Const.TASKS_TABLE + " WHERE " + Const.TASKS_USERID + "=?" + " AND " + Const.TASKS_ID + "=?";
+        String query = "DELETE FROM " + Const.TASKS.TABLE + " WHERE " + Const.TASKS.USERID + "=?" + " AND " + Const.TASKS.ID + "=?";
 
         PreparedStatement preparedStatement;
         try {

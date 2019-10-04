@@ -1,16 +1,12 @@
 package sample.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import sample.patterns.SingleTonShowMenu;
 import sample.database.DatabaseHandler;
 import sample.model.Task;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -35,6 +31,8 @@ public class AddItemFormController {
 
     @FXML
     private TextField addItemFormTask;
+
+    SingleTonShowMenu singleTonShowMenu = SingleTonShowMenu.getInstance();
 
     @FXML
     void initialize() {
@@ -62,26 +60,14 @@ public class AddItemFormController {
                 task.setDescription(addDescription);
 
                 databaseHandler.addTask(task);
+                singleTonShowMenu.showInformationAlert("Task successfully added!!");
             } else {
-                System.out.println("....");
+                singleTonShowMenu.showErrorAlert("Fill in the fields");
             }
         });
 
         goBackButton.setOnAction(event -> {
-            goBackButton.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/view/toDoList.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            singleTonShowMenu.setLocationAndCloseStage(goBackButton, "toDoList");
         });
     }
 }

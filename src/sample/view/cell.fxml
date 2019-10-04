@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane fx:id="rootAnchorPane" prefHeight="100.0" prefWidth="328.0" style="-fx-background-color: #d32f2f;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CellController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="100.0" prefWidth="328.0" style="-fx-background-color: #d32f2f;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="cellTask" alignment="CENTER" layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="166.0" style="-fx-background-color: #ff6659;" text="Task" />
-      <Label fx:id="cellDescription" alignment="CENTER" layoutX="14.0" layoutY="26.0" prefHeight="48.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="Description" />
+      <Label fx:id="cellDescription" alignment="CENTER" layoutX="14.0" layoutY="26.0" prefHeight="48.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="Description" textFill="RED" />
       <Label fx:id="cellDate" alignment="CENTER_RIGHT" layoutX="120.0" layoutY="78.0" prefHeight="17.0" prefWidth="204.0" text="Date Created" textFill="WHITE" />
       <Button fx:id="cellDelete" layoutX="239.0" layoutY="23.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="85.0" text="Delete" />
    </children>

@@ -1,18 +1,14 @@
 package sample.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import sample.patterns.SingleTonShowMenu;
 import sample.animations.Shaker;
 import sample.database.DatabaseHandler;
 import sample.model.User;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,6 +38,8 @@ public class LoginController {
     private PasswordField loginPassword;
 
     private DatabaseHandler databaseHandler;
+
+    SingleTonShowMenu singleTonShowMenu = SingleTonShowMenu.getInstance();
 
     @FXML
     void initialize() {
@@ -74,7 +72,8 @@ public class LoginController {
                     }
 
                     if (count >= 1) {
-                        showAddItemScreen();
+                        SingleTonShowMenu singleTonShowMenu = SingleTonShowMenu.getInstance();
+                        singleTonShowMenu.setLocationAndCloseStage(loginButton, "toDoList");
                     } else {
                         Shaker shakerUser = new Shaker(loginUsername);
                         Shaker shakerPass = new Shaker(loginPassword);
@@ -85,46 +84,13 @@ public class LoginController {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("Заполните все поля");
+                singleTonShowMenu.showErrorAlert("Fill in the fields");
             }
         });
 
 
-        loginSignUpButton.setOnAction(event -> {
-            loginSignUpButton.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/view/signUp.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        });
-
+        loginSignUpButton.setOnAction(event ->
+            singleTonShowMenu.setLocationAndCloseStage(loginSignUpButton, "signUp"));
     }
 
-
-
-    private void showAddItemScreen() {
-        loginButton.getScene().getWindow().hide();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/view/toDoList.fxml"));
-
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
-    }
 }

@@ -2,19 +2,23 @@ package sample.database;
 
 public class Const {
 
-    public static final String USERS_TABLE = "users";
-    public static final String TASKS_TABLE = "tasks";
+    public static class USERS {
+        public static final String TABLE = "users";
+        public static final String ID = "userid";
+        public static final String FIRSTNAME = "firstname";
+        public static final String LASTNAME = "lastname";
+        public static final String USERNAME = "username";
+        public static final String PASSWORD = "password";
+    }
 
-    public static final String USERS_ID = "userid";
-    public static final String USERS_FIRSTNAME = "firstname";
-    public static final String USERS_LASTNAME = "lastname";
-    public static final String USERS_USERNAME = "username";
-    public static final String USERS_PASSWORD = "password";
+    public static class TASKS {
+        public static final String TABLE = "tasks";
+        public static final String ID = "taskid";
+        public static final String USERID = "userid";
+        public static final String DATE = "datecreated";
+        public static final String DESCRIPTION = "description";
+        public static final String TASK = "task";
+    }
 
-    public static final String TASKS_ID = "taskid";
-    public static final String TASKS_USERID = "userid";
-    public static final String TASKS_DATE = "datecreated";
-    public static final String TASKS_DESCRIPTION = "description";
-    public static final String TASKS_TASK = "task";
 
 }

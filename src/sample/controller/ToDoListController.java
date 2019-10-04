@@ -3,18 +3,14 @@ package sample.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import sample.patterns.SingleTonShowMenu;
 import sample.database.DatabaseHandler;
 import sample.model.Task;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,11 +18,6 @@ import java.util.ResourceBundle;
 
 public class ToDoListController {
 
-    @FXML
-    private Button refreshButton;
-
-    @FXML
-    private Button buttonDelete;
 
     @FXML
     private TextField textDelete;
@@ -44,34 +35,20 @@ public class ToDoListController {
     private Button logOut;
 
 
-
-
-
     @FXML
     private Button addTask;
 
     private ObservableList<Task> tasks;
 
-    DatabaseHandler databaseHandler;
+    private DatabaseHandler databaseHandler;
+
+    SingleTonShowMenu singleTonShowMenu = SingleTonShowMenu.getInstance();
 
     @FXML
     void initialize() throws SQLException {
         addTask.setOnAction(event -> {
-
-            addTask.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/view/addItemForm.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            SingleTonShowMenu singleTonShowMenu = SingleTonShowMenu.getInstance();
+            singleTonShowMenu.setLocationAndCloseStage(addTask, "addItemForm");
         });
 
         tasks = FXCollections.observableArrayList();
@@ -88,54 +65,16 @@ public class ToDoListController {
             task.setDescription(taskSet.getString("description"));
             tasks.addAll(task);
 
-
-            tasksList.setItems(tasks);
             tasksList.setCellFactory(CellController -> new CellController());
+            tasksList.setItems(tasks);
         }
 
 
         logOut.setOnAction(event -> {
-            logOut.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/view/login.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (singleTonShowMenu.showConfirmationAlert("Log out",
+                    "Do you really want to log out?").get() == ButtonType.OK) {
+                singleTonShowMenu.setLocationAndCloseStage(logOut, "login");
             }
-
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        });
-
-
-        buttonDelete.setOnAction(event -> {
-            databaseHandler = new DatabaseHandler();
-
-            int taskID = Integer.parseInt(textDelete.getText().trim());
-            int userID = LoginController.userID;
-
-            databaseHandler.deleteTask(userID, taskID);
-        });
-
-        refreshButton.setOnAction(event -> {
-            refreshButton.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/view/toDoList.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
         });
     }
 }

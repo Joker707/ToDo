@@ -58,11 +58,4 @@ public class Task {
         this.taskId = taskId;
     }
 
-    @Override
-    public String toString() {
-        return "taskId: " + taskId +
-                "; " + task +
-                ": " + description +
-        "(" + datecreated + ")";
-    }
 }

@@ -2,12 +2,17 @@ package sample.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import sample.database.DatabaseHandler;
 import sample.model.Task;
+import sample.patterns.SingleTonShowMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,10 +44,12 @@ public class CellController extends ListCell<Task> {
 
     DatabaseHandler databaseHandler;
 
+    SingleTonShowMenu singleTonShowMenu = SingleTonShowMenu.getInstance();
+
     @FXML
     void initialize() {
         if (fxmlLoader == null) {
-            fxmlLoader = new FXMLLoader(getClass().getResource("/sample/cell.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/cell.fxml"));
             fxmlLoader.setController(this);
             try {
                 fxmlLoader.load();
@@ -69,8 +76,11 @@ public class CellController extends ListCell<Task> {
             cellDelete.setOnAction(event -> {
                 databaseHandler = new DatabaseHandler();
 
-                databaseHandler.deleteTask(LoginController.userID, item.getTaskId());
-
+                if (singleTonShowMenu.showConfirmationAlert("Delete task",
+                        "Do you really want to delete it?").get() == ButtonType.OK) {
+                    databaseHandler.deleteTask(LoginController.userID, item.getTaskId());
+                    getListView().getItems().remove(getItem());
+                }
             });
 
             setText(null);
